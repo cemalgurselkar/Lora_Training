@@ -1,0 +1,52 @@
+{
+    "system_prompt": "You are an expert Python programmer. Please read the problem carefully before writing any Python code.",
+    "base_model": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    "datasets": {
+        "DEEP": "Naholav/CodeGen-Deep-5K",
+        "DIVERSE": "Naholav/CodeGen-Diverse-5K"
+    },
+    "lora_config": {
+        "r": 32,
+        "lora_alpha": 64,
+        "lora_dropout": 0.05,
+        "bias": "none",
+        "task_type": "CAUSAL_LM",
+        "use_dora": true,
+        "target_modules": [
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj"
+        ]
+    },
+    "training_args": {
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 0.0001,
+        "num_train_epochs": 3,
+        "weight_decay": 0.01,
+        "lr_scheduler_type": "cosine_with_restarts",
+        "warmup_ratio": 0.05,
+        "bf16": true,
+        "logging_steps": 20,
+        "neftune_noise_alpha": 5,
+        "eval_strategy": "steps",
+        "eval_steps": 100,
+        "save_strategy": "steps",
+        "save_steps": 100,
+        "save_total_limit": null,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "eval_loss",
+        "greater_is_better": false,
+        "per_device_eval_batch_size": 1,
+        "max_grad_norm": 0.3,
+        "gradient_checkpointing": false,
+        "group_by_length": true,
+        "report_to": "none"
+    },
+    "max_seq_length": 1024,
+    "seed": 42
+}
