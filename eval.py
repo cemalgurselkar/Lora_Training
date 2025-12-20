@@ -25,6 +25,7 @@ def setup_environment():
     if os.path.exists(req_path):
         subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r", req_path], check=True)
 
+
 def prepare_checkpoints(source_dir, model_type):
     """
     Drive'daki modelleri PDF formatına uygun şekilde CodeGen klasörüne bağlar.
@@ -81,8 +82,6 @@ def patch_eval_script():
     with open(script_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 1. Model Tiplerini Değiştir [cite: 71-73]
-    # Orijinal satırı bulup bizimkiyle değiştiriyoruz
     if '"deep_instruction", "diverse_instruction"' not in content:
         print(" Eval scripti güncelleniyor (Model Tipleri)...")
         # Regex ile tuple kısmını bulup değiştirme (daha güvenli)
@@ -110,8 +109,7 @@ def patch_eval_script():
 def run_benchmark(model_type, output_backup_dir):
     """Benchmarkı başlatır ve sonuçları yedekler [cite: 78-84]"""
     print(f"\n {model_type.upper()} Testi Başlatılıyor...")
-    
-    # Çalıştırma Komutu [cite: 78, 79]
+
     cmd = [
         sys.executable, "livecodebench_eval.py",
         "--model_type", model_type,

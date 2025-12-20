@@ -65,13 +65,12 @@ CONFIG = {
 class TxtLoggerCallback(TrainerCallback):
     def __init__(self, log_path):
         self.log_path = log_path
-        # Dosyayı sıfırdan oluştur
+
         with open(self.log_path, "w") as f:
             f.write("==== Training Log Started ====\n")
 
-    def on_log(self, args, state, control, logs=None, **kwargs):
+    def on_log(self, logs=None, **kwargs):
         if logs is None: return
-        # Logları ekle
         with open(self.log_path, "a") as f:
             f.write(json.dumps(logs, indent=4))
             f.write("\n")
@@ -117,7 +116,6 @@ def preprocess_function(samples, tokenizer, max_seq_len):
 
     return {"input_ids": batch_input_ids, "attention_mask": batch_attention_mask, "labels": batch_labels}
 
-# --- 3. ANA EĞİTİM FONKSİYONU ---
 
 def run_training(args):
     dataset_key = args.dataset
@@ -137,7 +135,6 @@ def run_training(args):
 
     os.makedirs(drive_root, exist_ok=True)
 
-    # Config Güncellemeleri (Terminalden gelen parametrelerle)
     if args.epochs:
         CONFIG["training_args"]["num_train_epochs"] = args.epochs
     
@@ -208,7 +205,7 @@ def run_training(args):
         ]
     )
 
-    print("🚀 Eğitim Başlıyor...")
+    print("Eğitim Başlıyor...")
     trainer.train()
 
     trainer.save_model(output_dir)
@@ -219,7 +216,7 @@ def run_training(args):
     with open(os.path.join(output_dir, "training_config.json"), "w") as f: 
         json.dump(final_config, f, indent=4)
 
-    print(f"✅ Bitti! Sonuçlar: {output_dir}")
+    print(f"Bitti! Sonuçlar: {output_dir}")
     del model, trainer
     torch.cuda.empty_cache()
 
