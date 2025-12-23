@@ -1,0 +1,350 @@
+[
+    {
+        "soru_id": "abc365_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "You are given an integer sequence A=(A_1,\\ldots,A_N) of length N. Here, A_1, A_2, \\ldots, A_N are all distinct.\nWhich element in A is the second largest?\n\nInput\n\nThe input is given from Standard Input in the following format:\nN \r\nA_1 A_2 \\ldots A_{N}\n\nOutput\n\nPrint the integer X such that the X-th element in A is the second largest.\n\nConstraints\n\n\n- 2 \\leq N \\leq 100\n- 1 \\leq A_i \\leq 10^9\n- A_1, A_2, \\ldots, A_N are all distinct.\n- All input values are integers.\n\nSample Input 1\n\n4\r\n8 2 5 1\n\nSample Output 1\n\n3\r\n\nThe second largest element in A is A_3, so print 3.\n\nSample Input 2\n\n8\r\n1 2 3 4 5 10 9 11\n\nSample Output 2\n\n6",
+        "model_cevabi": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    arr = list(map(int, data[1:1+n]))\n    \n    first_max = -1\n    second_max = -1\n    \n    for num in arr:\n        if num > first_max:\n            second_max = first_max\n            first_max = num\n        elif first_max > num > second_max:\n            second_max = num\n            \n    print(second_max)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 2,
+            "gecilen": 0,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc366_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "You are given a horizontally written text. Convert it to vertical writing, filling spaces with *.\n\nYou are given N strings S_1, S_2, \\dots, S_N consisting of lowercase English letters. Let M be the maximum length of these strings.\nPrint M strings T_1, T_2, \\dots, T_M that satisfy the following conditions:\n\n- Each T_i consists of lowercase English letters and *.\n- Each T_i does not end with *.\n- For each 1 \\leq i \\leq N, the following holds:\n- For each 1 \\leq j \\leq |S_i|, the (N-i+1)-th character of T_j exists, and the concatenation of the (N-i+1)-th characters of T_1, T_2, \\dots, T_{|S_i|} in this order equals S_i.\n- For each |S_i| + 1 \\leq j \\leq M, the (N-i+1)-th character of T_j either does not exist or is *.\n\n\n\nHere, |S_i| denotes the length of the string S_i.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\nS_1\nS_2\n\\vdots\nS_N\n\nOutput\n\nPrint the answer in the following format:\nT_1\nT_2\n\\vdots\nT_M\n\nConstraints\n\n\n- N is an integer between 1 and 100, inclusive.\n- Each S_i is a string of lowercase English letters with length between 1 and 100, inclusive.\n\nSample Input 1\n\n3\nabc\nde\nfghi\n\nSample Output 1\n\nfda\ngeb\nh*c\ni\n\nPlacing * as the 2nd character of T_3 puts the c in the correct position.\nOn the other hand, placing * as the 2nd and 3rd characters of T_4 would make T_4 end with *, which violates the condition.\n\nSample Input 2\n\n3\natcoder\nbeginner\ncontest\n\nSample Output 2\n\ncba\noet\nngc\ntio\nend\nsne\nter\n*r",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    \n    n = int(data[0])\n    strings = []\n    for i in range(1, n + 1):\n        strings.append(data[i].strip())\n    \n    max_len = max(len(s) for s in strings)\n    \n    result = []\n    for i in range(n, 0, -1):\n        base_str = strings[n - i]\n        prefix = base_str[:-1] if len(base_str) > 1 else \"\"\n        \n        # Create the vertical line by repeating the first character\n        vertical_line = [base_str[0]] * max_len\n        \n        # Fill the rest with appropriate characters\n        for j in range(max_len):\n            char_index = j % len(prefix)\n            if char_index < len(prefix):\n                vertical_line[j] = prefix[char_index]\n            else:\n                vertical_line[j] = \"*\"\n        \n        result.append(\"\".join(vertical_line))\n    \n    print(\"\\n\".join(result))\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 2,
+            "gecilen": 0,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc367_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "In the Kingdom of AtCoder, residents are required to shout their love for takoyaki at A o'clock every day.\nTakahashi, who lives in the Kingdom of AtCoder, goes to bed at B o'clock and wakes up at C o'clock every day (in the 24-hour clock). He can shout his love for takoyaki when he is awake, but cannot when he is asleep. Determine whether he can shout his love for takoyaki every day. Here, a day has 24 hours, and his sleeping time is less than 24 hours.\n\nInput\n\nThe input is given from Standard Input in the following format:\nA B C\n\nOutput\n\nPrint Yes if Takahashi can shout his love for takoyaki every day, and No otherwise.\n\nConstraints\n\n\n- 0\\leq A,B,C\\lt 24\n- A, B, and C are pairwise different.\n- All input values are integers.\n\nSample Input 1\n\n21 8 14\n\nSample Output 1\n\nYes\r\n\nTakahashi goes to bed at 8 o'clock and wakes up at 14 o'clock every day. He is awake at 21 o'clock, so he can shout his love for takoyaki every day. Therefore, print Yes.\n\nSample Input 2\n\n0 21 7\n\nSample Output 2\n\nNo\r\n\nTakahashi goes to bed at 21 o'clock and wakes up at 7 o'clock every day. He is not awake at 0 o'clock, so he cannot shout his love for takoyaki every day. Therefore, print No.\n\nSample Input 3\n\n10 7 17\n\nSample Output 3\n\nNo",
+        "model_cevabi": "def main():\n    A, B, C = map(int, input().split())\n    \n    # Calculate wake-up hour after bedtime\n    wake_up_hour = B + (C - B) % 24\n    \n    # Check if wake-up hour is between A and B (inclusive)\n    if A <= wake_up_hour <= B:\n        print(\"Yes\")\n    else:\n        print(\"No\")\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 2,
+            "basarisiz": 1
+        }
+    },
+    {
+        "soru_id": "abc368_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "You are given a sequence of N positive integers A = (A_1, A_2, \\dots ,A_N). Takahashi repeats the following operation until A contains one or fewer positive elements:\n\n- Sort A in descending order. Then, decrease both A_1 and A_2 by 1.\n\nFind the number of times he performs this operation.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\nA_1 A_2 \\cdots A_N\n\nOutput\n\nPrint the answer.\n\nConstraints\n\n\n- 2 \\leq N \\leq 100\n- 1 \\leq A_i \\leq 100\n- All input values are integers.\n\nSample Input 1\n\n4\n1 2 3 3\n\nSample Output 1\n\n4\n\nThe process goes as follows:\n\n- After the 1st operation, A is (2, 2, 2, 1).\n- After the 2nd operation, A is (1, 1, 2, 1).\n- After the 3rd operation, A is (1, 0, 1, 1).\n- After the 4th operation, A is (0, 0, 1, 0). A no longer contains more than one positive elements, so the process ends here.\n\nSample Input 2\n\n3\n1 1 100\n\nSample Output 2\n\n2",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    arr = list(map(int, data[1:1+n]))\n    \n    total_decrements = 0\n    for i in range(n):\n        if arr[i] > 1:\n            total_decrements += 2\n    \n    print(total_decrements)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 2,
+            "gecilen": 1,
+            "basarisiz": 1
+        }
+    },
+    {
+        "soru_id": "abc369_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "You are given two integers A and B.\nHow many integers x satisfy the following condition?\n\n- Condition: It is possible to arrange the three integers A, B, and x in some order to form an arithmetic sequence.\n\nA sequence of three integers p, q, and r in this order is an arithmetic sequence if and only if q-p is equal to r-q.\n\nInput\n\nThe input is given from Standard Input in the following format:\nA B\n\nOutput\n\nPrint the number of integers x that satisfy the condition in the problem statement.\r\nIt can be proved that the answer is finite.\n\nConstraints\n\n\n- 1 \\leq A,B \\leq 100\n- All input values are integers.\n\nSample Input 1\n\n5 7\n\nSample Output 1\n\n3\r\n\nThe integers x=3,6,9 all satisfy the condition as follows:\n\n- When x=3, for example, arranging x,A,B forms the arithmetic sequence 3,5,7.\n- When x=6, for example, arranging B,x,A forms the arithmetic sequence 7,6,5.\n- When x=9, for example, arranging A,B,x forms the arithmetic sequence 5,7,9.\n\nConversely, there are no other values of x that satisfy the condition.\r\nTherefore, the answer is 3.\n\nSample Input 2\n\n6 1\n\nSample Output 2\n\n2\r\n\nOnly x=-4 and 11 satisfy the condition.\n\nSample Input 3\n\n3 3\n\nSample Output 3\n\n1\r\n\nOnly x=3 satisfies the condition.",
+        "model_cevabi": "def main():\n    A, B = map(int, input().split())\n    \n    count = 0\n    \n    # Check x=A+2\n    if (A + 2) - A == (B + 2) - B:\n        count += 1\n        \n    # Check x=B-2  \n    if (A - 2) - A == (B - 2) - B:\n        count += 1\n        \n    print(count)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 1,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc369_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "Takahashi has a piano with 100 keys arranged in a row.\r\nThe i-th key from the left is called key i.\nHe will play music by pressing N keys one by one.\r\nFor the i-th press, he will press key A_i, using his left hand if S_i= L, and his right hand if S_i= R.\nBefore starting to play, he can place both of his hands on any keys he likes, and his fatigue level at this point is 0.\r\nDuring the performance, if he moves one hand from key x to key y, the fatigue level increases by |y-x| (conversely, the fatigue level does not increase for any reason other than moving hands).\r\nTo press a certain key with a hand, that hand must be placed on that key.\nFind the minimum possible fatigue level at the end of the performance.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\r\nA_1 S_1\r\nA_2 S_2\r\n\\vdots\r\nA_N S_N\n\nOutput\n\nPrint the minimum fatigue level at the end of the performance.\n\nConstraints\n\n\n- 1 \\leq N \\leq 100\n- 1 \\leq A_i \\leq 100\n- N and A_i are integers.\n- S_i is L or R.\n\nSample Input 1\n\n4\r\n3 L\r\n6 R\r\n9 L\r\n1 R\n\nSample Output 1\n\n11\r\n\nFor example, the performance can be done as follows:\n\n- Initially, place the left hand on key 3 and the right hand on key 6.\n- Press key 3 with the left hand.\n- Press key 6 with the right hand.\n- Move the left hand from key 3 to key 9. The fatigue level increases by |9-3| = 6.\n- Move the right hand from key 6 to key 1. The fatigue level increases by |1-6| = 5.\n- Press key 9 with the left hand.\n- Press key 1 with the right hand.\n\nIn this case, the fatigue level at the end of the performance is 6+5 = 11, which is the minimum possible.\n\nSample Input 2\n\n3\r\n2 L\r\n2 L\r\n100 L\n\nSample Output 2\n\n98\n\nSample Input 3\n\n8\r\n22 L\r\n75 L\r\n26 R\r\n45 R\r\n72 R\r\n81 R\r\n47 L\r\n29 R\n\nSample Output 3\n\n188",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    \n    total_fatigue = 0\n    \n    index = 1\n    for _ in range(n):\n        pos = int(data[index])\n        side = data[index + 1]\n        index += 2\n        \n        current_fatigue = abs(pos - total_fatigue)\n        \n        if side == 'L':\n            # Move left hand to position\n            move_cost = abs(total_fatigue - pos)\n            current_fatigue += move_cost\n            total_fatigue = pos\n            \n        else:  # side == 'R'\n            # Move right hand to position\n            move_cost = abs(total_fatigue - pos)\n            current_fatigue += move_cost\n            total_fatigue = pos\n            \n        total_fatigue += current_fatigue\n    \n    print(total_fatigue)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc370_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are N types of elements numbered 1, 2, \\ldots, N.\nElements can be combined with each other. When elements i and j are combined, they transform into element A_{i, j} if i \\geq j, and into element A_{j, i} if i < j.\nStarting with element 1, combine it with elements 1, 2, \\ldots, N in this order. Find the final element obtained.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\r\nA_{1, 1}\r\nA_{2, 1} A_{2, 2}\r\n\\vdots\r\nA_{N, 1} A_{N, 2} \\ldots A_{N, N}\n\nOutput\n\nPrint the number representing the final element obtained.\n\nConstraints\n\n\n- 1 \\leq N \\leq 100\n- 1 \\leq A_{i, j} \\leq N\n- All input values are integers.\n\nSample Input 1\n\n4\r\n3\r\n2 4\r\n3 1 2\r\n2 1 2 4\n\nSample Output 1\n\n2\r\n\n\n- \r\nCombining element 1 with element 1 results in element 3.\n\n- \r\nCombining element 3 with element 2 results in element 1.\n\n- \r\nCombining element 1 with element 3 results in element 3.\n\n- \r\nCombining element 3 with element 4 results in element 2.\n\n\nTherefore, the value to be printed is 2.\n\nSample Input 2\n\n5\r\n5\r\n5 5\r\n5 5 5\r\n5 5 5 5\r\n5 5 5 5 5\n\nSample Output 2\n\n5\n\nSample Input 3\n\n6\r\n2\r\n1 5\r\n1 6 3\r\n2 6 1 4\r\n2 1 1 1 6\r\n5 6 1 2 2 5\n\nSample Output 3\n\n5",
+        "model_cevabi": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    a_list = []\n    \n    index = 1\n    for i in range(n):\n        row = list(map(int, data[index:index+n]))\n        a_list.append(row)\n        index += n\n    \n    current = 1\n    for i in range(1, n + 1):\n        current = a_list[current - 1][i - 1]\n    \n    print(current)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 0
+        }
+    },
+    {
+        "soru_id": "abc371_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are three brothers named A, B, and C. The age relationships among them are given by three characters S_{\\mathrm{AB}}, S_{\\mathrm{AC}}, S_{\\mathrm{BC}}, which mean the following:\n\n- If S_{\\mathrm{AB}} is <, then A is younger than B; if it is >, then A is older than B.\n- If S_{\\mathrm{AC}} is <, then A is younger than C; if it is >, then A is older than C.\n- If S_{\\mathrm{BC}} is <, then B is younger than C; if it is >, then B is older than C.\n\nWho is the middle brother, that is, the second oldest among the three?\n\nInput\n\nThe input is given from Standard Input in the following format:\nS_{\\mathrm{AB}} S_{\\mathrm{AC}} S_{\\mathrm{BC}}\n\nOutput\n\nPrint the name of the middle brother, that is, the second oldest among the three.\n\nConstraints\n\n\n- Each of S_{\\mathrm{AB}}, S_{\\mathrm{AC}}, S_{\\mathrm{BC}} is < or >.\n- The input contains no contradictions; that is, there always exists an age relationship that satisfies all given inequalities.\n\nSample Input 1\n\n< < <\n\nSample Output 1\n\nB\n\nSince A is younger than B, and B is younger than C, we can determine that C is the oldest, B is the middle, and A is the youngest. Hence, the answer is B.\n\nSample Input 2\n\n< < >\n\nSample Output 2\n\nC",
+        "model_cevabi": "def main():\n    S = input().split()\n    \n    # Determine the order: A, B, C\n    if S[0] == '<':\n        A_B = 'A'\n    else:\n        A_B = 'B'\n        \n    if S[1] == '<':\n        A_C = 'A'\n    else:\n        A_C = 'C'\n        \n    if S[2] == '<':\n        B_C = 'B'\n    else:\n        B_C = 'B'\n        \n    # Determine who is the middle brother (second oldest)\n    if A_B == 'A' and A_C == 'A':\n        middle = B_C\n    elif A_B == 'A' and A_C == 'C':\n        middle = B_C\n    elif A_B == 'B' and A_C == 'A':\n        middle = C\n    elif A_B == 'B' and A_C == 'C':\n        middle = A\n    elif A_B == 'C' and A_C == 'A':\n        middle = B\n    else:  # A_B == 'C' and A_C == 'B'\n        middle = A\n        \n    print(middle)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 2,
+            "gecilen": 1,
+            "basarisiz": 1
+        }
+    },
+    {
+        "soru_id": "abc373_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are 12 strings S_1, S_2, \\ldots, S_{12} consisting of lowercase English letters.\nFind how many integers i (1 \\leq i \\leq 12) satisfy that the length of S_i is i.\n\nInput\n\nThe input is given from Standard Input in the following format:\nS_1\r\nS_2\r\n\\vdots\r\nS_{12}\n\nOutput\n\nPrint the number of integers i (1 \\leq i \\leq 12) such that the length of S_i is i.\n\nConstraints\n\n\n- Each S_i is a string of length between 1 and 100, inclusive, consisting of lowercase English letters. (1 \\leq i \\leq 12)\n\nSample Input 1\n\njanuary\r\nfebruary\r\nmarch\r\napril\r\nmay\r\njune\r\njuly\r\naugust\r\nseptember\r\noctober\r\nnovember\r\ndecember\n\nSample Output 1\n\n1\r\n\nThere is only one integer i such that the length of S_i is i: 9. Thus, print 1.\n\nSample Input 2\n\nve\r\ninrtfa\r\nnpccxva\r\ndjiq\r\nlmbkktngaovl\r\nmlfiv\r\nfmbvcmuxuwggfq\r\nqgmtwxmb\r\njii\r\nts\r\nbfxrvs\r\neqvy\n\nSample Output 2\n\n2\r\n\nThere are two integers i such that the length of S_i is i: 4 and 8. Thus, print 2.",
+        "model_cevabi": "def main():\n    count = 0\n    for i in range(1, 13):\n        valid = True\n        for j in range(i):\n            s = input().strip()\n            if len(s) != i:\n                valid = False\n                break\n        if valid:\n            count += 1\n    print(count)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 2,
+            "gecilen": 0,
+            "basarisiz": 0
+        }
+    },
+    {
+        "soru_id": "abc373_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There is a keyboard with 26 keys arranged on a number line.\nThe arrangement of this keyboard is represented by a string S, which is a permutation of ABCDEFGHIJKLMNOPQRSTUVWXYZ.\r\nThe key corresponding to the character S_x is located at coordinate x (1 \\leq x \\leq 26). Here, S_x denotes the x-th character of S.\nYou will use this keyboard to input ABCDEFGHIJKLMNOPQRSTUVWXYZ in this order, typing each letter exactly once with your right index finger.\r\nTo input a character, you need to move your finger to the coordinate of the key corresponding to that character and press the key.\nInitially, your finger is at the coordinate of the key corresponding to A. Find the minimal possible total traveled distance of your finger from pressing the key for A to pressing the key for Z. Here, pressing a key does not contribute to the distance.\n\nInput\n\nThe input is given from Standard Input in the following format:\nS\n\nOutput\n\nPrint the answer.\n\nConstraints\n\n\n- S is a permutation of ABCDEFGHIJKLMNOPQRSTUVWXYZ.\n\nSample Input 1\n\nABCDEFGHIJKLMNOPQRSTUVWXYZ\n\nSample Output 1\n\n25\r\n\nFrom pressing the key for A to pressing the key for Z, you need to move your finger 1 unit at a time in the positive direction, resulting in a total traveled distance of 25. It is impossible to press all keys with a total traveled distance less than 25, so print 25.\n\nSample Input 2\n\nMGJYIZDKSBHPVENFLQURTCWOAX\n\nSample Output 2\n\n223",
+        "model_cevabi": "import sys\n\ndef main():\n    S = sys.stdin.readline().strip()\n    \n    # Create dictionary mapping characters to their positions\n    char_to_pos = {}\n    for i, c in enumerate(S):\n        char_to_pos[c] = i + 1\n    \n    # Calculate total distance\n    total_distance = 0\n    current_position = 1  # Start at position 1 (A)\n    \n    for c in S:\n        pos = char_to_pos[c]\n        distance = abs(pos - current_position)\n        total_distance += distance\n        current_position = pos\n    \n    print(total_distance)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 2,
+            "gecilen": 1,
+            "basarisiz": 1
+        }
+    },
+    {
+        "soru_id": "abc374_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "KEYENCE has a culture of reporting things as they are, whether good or bad.\nSo we want to check whether the reported content is exactly the same as the original text.\n\nYou are given two strings S and T, consisting of lowercase English letters.\nIf S and T are equal, print 0; otherwise, print the position of the first character where they differ.\nHere, if the i-th character exists in only one of S and T, consider that the i-th characters are different.\nMore precisely, if S and T are not equal, print the smallest integer i satisfying one of the following conditions:\n\n- 1\\leq i\\leq |S|, 1\\leq i\\leq |T|, and S_i\\neq T_i.\n- |S| < i \\leq |T|.\n- |T| < i \\leq |S|.\n\nHere, |S| and |T| denote the lengths of S and T, respectively, and S_i and T_i denote the i-th characters of S and T, respectively.\n\nInput\n\nThe input is given from Standard Input in the following format:\nS\nT\n\nOutput\n\nIf S and T are equal, print 0; otherwise, print the position of the first character where they differ.\n\nConstraints\n\n\n- S and T are strings of length between 1 and 100, inclusive, consisting of lowercase English letters.\n\nSample Input 1\n\nabcde\nabedc\n\nSample Output 1\n\n3\n\nWe have S= abcde and T= abedc.\nS and T have the same first and second characters, but differ at the third character, so print 3.\n\nSample Input 2\n\nabcde\nabcdefg\n\nSample Output 2\n\n6\n\nWe have S= abcde and T= abcdefg.\nS and T are equal up to the fifth character, but only T has a sixth character, so print 6.\n\nSample Input 3\n\nkeyence\nkeyence\n\nSample Output 3\n\n0\n\nS and T are equal, so print 0.",
+        "model_cevabi": "def main():\n    S = input().strip()\n    T = input().strip()\n    \n    if S == T:\n        print(0)\n    else:\n        for i in range(min(len(S), len(T))):\n            if S[i] != T[i]:\n                print(i + 1)\n                return\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 2,
+            "basarisiz": 1
+        }
+    },
+    {
+        "soru_id": "abc375_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "Takahashi is at the origin on a two-dimensional coordinate plane.\nThe cost for him to move from point (a, b) to point (c, d) is \\sqrt{(a - c)^2 + (b - d)^2}.\nFind the total cost when he starts at the origin, visits N points (X_1, Y_1), \\ldots, (X_N, Y_N) in this order, and then returns to the origin.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\r\nX_1 Y_1\r\n\\vdots\r\nX_N Y_N\n\nOutput\n\nPrint the answer.\r\nYour output will be considered correct if its absolute or relative error from the true value is at most 10^{-6}.\n\nConstraints\n\n\n- 1 \\leq N \\leq 2 \\times 10^5\n- -10^9 \\leq X_i, Y_i \\leq 10^9\n- All input values are integers.\n\nSample Input 1\n\n2\r\n1 2\r\n-1 0\n\nSample Output 1\n\n6.06449510224597979401\r\n\nThe journey consists of the following three steps:\n\n- Move from (0, 0) to (1, 2). The cost is \\sqrt{(0 - 1)^2 + (0 - 2)^2} = \\sqrt{5} = 2.236067977....\n- Move from (1, 2) to (-1, 0). The cost is \\sqrt{(1 - (-1))^2 + (2 - 0)^2} = \\sqrt{8} = 2.828427124....\n- Move from (-1, 0) to (0, 0). The cost is \\sqrt{(-1 - 0)^2 + (0 - 0)^2} = \\sqrt{1} = 1.\n\nThe total cost is 6.064495102....\n\nSample Input 2\n\n7\r\n-14142 13562\r\n-17320 50807\r\n-22360 67977\r\n24494 89742\r\n-26457 51311\r\n28284 27124\r\n31622 77660\n\nSample Output 2\n\n384694.57587932075868509383\n\nSample Input 3\n\n5\r\n-100000 100000\r\n100000 -100000\r\n-100000 100000\r\n100000 -100000\r\n-100000 100000\n\nSample Output 3\n\n1414213.56237309504880168872",
+        "model_cevabi": "import math\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    \n    points = []\n    index = 1\n    for i in range(n):\n        x = int(data[index]); y = int(data[index+1])\n        index += 2\n        points.append((x, y))\n    \n    # Calculate distances between consecutive points\n    dists = []\n    for i in range(n):\n        x1, y1 = points[i]\n        x2, y2 = points[(i + 1) % n]\n        dx = x2 - x1\n        dy = y2 - y1\n        dists.append(math.sqrt(dx * dx + dy * dy))\n    \n    # Add distance from last to first\n    dists.append(math.sqrt(points[0][0]**2 + points[0][1]**2))\n    \n    # Calculate total cost using Lagrange multipliers\n    # We need to minimize f(x) = sum(dists[i] * lambda[i]) subject to g(i) = x[i]^2 + y[i]^2 - 1 = 0\n    # But we can use the fact that the sum of squares constraint implies that each segment has unit length\n    # So we can directly compute the total cost as the sum of distances\n    \n    total_cost = sum(dists)\n    print(\"{:.10f}\".format(total_cost))\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc375_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are N seats in a row, numbered 1, 2, \\ldots, N.\nThe state of the seats is given by a string S of length N consisting of # and .. If the i-th character of S is #, it means seat i is occupied; if it is ., seat i is unoccupied.\nFind the number of integers i between 1 and N - 2, inclusive, that satisfy the following condition:\n\n- Seats i and i + 2 are occupied, and seat i + 1 is unoccupied.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\r\nS\n\nOutput\n\nPrint the answer.\n\nConstraints\n\n\n- N is an integer satisfying 1 \\leq N \\leq 2 \\times 10^5.\n- S is a string of length N consisting of # and ..\n\nSample Input 1\n\n6\r\n#.##.#\n\nSample Output 1\n\n2\r\n\ni = 1 and 4 satisfy the condition, so the answer is 2.\n\nSample Input 2\n\n1\r\n#\n\nSample Output 2\n\n0\n\nSample Input 3\n\n9\r\n##.#.#.##\n\nSample Output 3\n\n3",
+        "model_cevabi": "import sys\n\ndef main():\n    data = sys.stdin.read().splitlines()\n    n = int(data[0])\n    s = data[1].strip()\n    \n    count = 0\n    for i in range(n - 2):\n        if s[i] == '#' and s[i+2] == '#':\n            if (i == 0 or s[i-1] == '.') and (i+3 == n or s[i+3] == '.'):\n                count += 1\n                \n    print(count)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 1,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc376_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There is a mysterious button.\r\nWhen you press this button, you receive one candy, unless less than C seconds have elapsed since you last received a candy.\nTakahashi decided to press this button N times.\r\nHe will press the button for the i-th time T_i seconds from now.\nHow many candies will he receive?\n\nInput\n\nThe input is given from Standard Input in the following format:\nN C\r\nT_1 T_2 \\dots T_N\n\nOutput\n\nPrint the number of candies that Takahashi will receive.\n\nConstraints\n\n\n- 1 \\leq N \\leq 100\n- 1 \\leq C \\leq 1000\n- 0 \\leq T_1 < T_2 < \\dots < T_N \\leq 1000\n- All input values are integers.\n\nSample Input 1\n\n6 5\r\n1 3 7 8 10 12\n\nSample Output 1\n\n3\r\n\nTakahashi will press the button six times.\n\n- 1st press (1 second from now): You always receive a candy when pressing the button for the first time.\n- 2nd press (3 seconds from now): 3 - 1 = 2 < C seconds have elapsed since he last received a candy, so he does not receive a candy.\n- 3rd press (7 seconds from now): 7 - 1 = 6 \\geq C seconds have elapsed since he last received a candy, so he receives a candy.\n- 4th press (8 seconds from now): 8 - 7 = 1 < C second has elapsed since he last received a candy, so he does not receive a candy.\n- 5th press (10 seconds from now): 10 - 7 = 3 < C seconds have elapsed since he last received a candy, so he does not receive a candy.\n- 6th press (12 seconds from now): 12 - 7 = 5 \\geq C seconds have elapsed since he last received a candy, so he receives a candy.\n\nTherefore, he receives three candies.\n\nSample Input 2\n\n3 2\r\n0 2 4\n\nSample Output 2\n\n3\n\nSample Input 3\n\n10 3\r\n0 3 4 6 9 12 15 17 19 20\n\nSample Output 3\n\n7",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    c = int(data[1])\n    times = list(map(int, data[2:2+n]))\n    \n    current_time = 0\n    total_candies = 0\n    \n    for t in times:\n        if t >= current_time + c:\n            total_candies += 1\n            current_time = t\n        \n    print(total_candies)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc377_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There is a grid of 64 squares with 8 rows and 8 columns.\nLet (i,j) denote the square at the i-th row from the top (1\\leq i\\leq8) and j-th column from the left (1\\leq j\\leq8).\nEach square is either empty or has a piece placed on it.\nThe state of the squares is represented by a sequence (S_1,S_2,S_3,\\ldots,S_8) of 8 strings of length 8.\nSquare (i,j) (1\\leq i\\leq8,1\\leq j\\leq8) is empty if the j-th character of S_i is ., and has a piece if it is #.\nYou want to place your piece on an empty square in such a way that it cannot be captured by any of the existing pieces.\nA piece placed on square (i,j) can capture pieces that satisfy either of the following conditions:\n\n- Placed on a square in row i\n- Placed on a square in column j\n\nFor example, a piece placed on square (4,4) can capture pieces placed on the squares shown in blue in the following figure:\n\nHow many squares can you place your piece on?\n\nInput\n\nThe input is given from Standard Input in the following format:\nS_1\nS_2\nS_3\nS_4\nS_5\nS_6\nS_7\nS_8\n\nOutput\n\nPrint the number of empty squares where you can place your piece without it being captured by any existing pieces.\n\nConstraints\n\n\n- Each S_i is a string of length 8 consisting of . and # (1\\leq i\\leq 8).\n\nSample Input 1\n\n...#....\n#.......\n.......#\n....#...\n.#......\n........\n........\n..#.....\n\nSample Output 1\n\n4\n\nThe existing pieces can capture pieces placed on the squares shown in blue in the following figure:\n\nTherefore, you can place your piece without it being captured on 4 squares: square (6,6), square (6,7), square (7,6), and square (7,7).\n\nSample Input 2\n\n........\n........\n........\n........\n........\n........\n........\n........\n\nSample Output 2\n\n64\n\nThere may be no pieces on the grid.\n\nSample Input 3\n\n.#......\n..#..#..\n....#...\n........\n..#....#\n........\n...#....\n....#...\n\nSample Output 3\n\n4",
+        "model_cevabi": "def main():\n    lines = []\n    for _ in range(8):\n        lines.append(input().strip())\n    \n    count = 0\n    for i in range(8):\n        for j in range(8):\n            if lines[i][j] == '.':\n                valid = True\n                \n                # Check vertical line condition\n                for k in range(i + 1, 8):\n                    if lines[k][j] == '#':\n                        valid = False\n                        break\n                \n                # Check horizontal line condition  \n                for l in range(j + 1, 8):\n                    if lines[i][l] == '#':\n                        valid = False\n                        break\n                \n                if valid:\n                    count += 1\n                    \n    print(count)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 1,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc378_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "In AtCoder City, N types of garbage are collected regularly. The i-th type of garbage (i=1,2,\\dots,N) is collected on days when the date modulo q_i equals r_i.\nAnswer Q queries. In the j-th query (j=1,2,\\dots,Q), given that the t_j-th type of garbage is put out on day d_j, answer the next day on which it will be collected.\nHere, if the i-th type of garbage is put out on a day when that type of garbage is collected, then the garbage will be collected on the same day.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\nq_1 r_1\nq_2 r_2\n\\vdots\nq_N r_N\nQ\nt_1 d_1\nt_2 d_2\n\\vdots\nt_Q d_Q\n\nOutput\n\nPrint Q lines. The j-th line (1\\leq j \\leq Q) should contain the answer to the j-th query.\n\nConstraints\n\n\n- 1 \\leq N \\leq 100\n- 0 \\leq r_i < q_i \\leq 10^9\n- 1 \\leq Q \\leq 100\n- 1 \\leq t_j \\leq N\n- 1 \\leq d_j \\leq 10^9\n- All input values are integers.\n\nSample Input 1\n\n2\n7 3\n4 2\n5\n1 1\n1 3\n1 4\n1 15\n2 7\n\nSample Output 1\n\n3\n3\n10\n17\n10\n\n\n- 1st query: The 1st type of garbage is collected on day 3 for the first time after day 1.\n- 2nd query: The 1st type of garbage is collected on day 3 for the first time after day 3.\n- 3rd query: The 1st type of garbage is collected on day 10 for the first time after day 4.",
+        "model_cevabi": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    \n    # Parse garbage collection intervals\n    intervals = []\n    index = 1\n    for _ in range(n):\n        q = int(data[index]); r = int(data[index+1]); index += 2\n        intervals.append((q, r))\n    \n    # Parse queries\n    q_queries = []\n    for _ in range(n):\n        t = int(data[index]); d = int(data[index+1]); index += 2\n        q_queries.append((t, d))\n    \n    # Precompute all possible days up to 10^9\n    max_day = 10**9\n    days = [0] * (max_day + 1)\n    \n    # For each interval (q, r), compute all days where collection occurs\n    for q, r in intervals:\n        current = r\n        while current <= max_day:\n            days[current] = True\n            current += q\n    \n    # Process queries\n    results = []\n    for t, d in q_queries:\n        result = d + 1\n        while not days[result]:\n            result += 1\n        results.append(str(result))\n    \n    print(\"\\n\".join(results))\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 1,
+            "gecilen": 0,
+            "basarisiz": 0
+        }
+    },
+    {
+        "soru_id": "abc378_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are four balls, and the color of the i-th ball is A_i.\nFind the maximum number of times you can perform this operation: choose two balls of the same color and discard both.\n\nInput\n\nThe input is given from Standard Input in the following format:\nA_1 A_2 A_3 A_4\n\nOutput\n\nPrint the maximum number of times the operation can be performed as an integer.\n\nConstraints\n\n\n- Each of A_1, A_2, A_3, A_4 is an integer between 1 and 4, inclusive.\n\nSample Input 1\n\n2 1 2 1\n\nSample Output 1\n\n2\r\n\nThe first and third balls both have color 2, so you can perform the operation to discard the first and third balls together.\nNext, the second and fourth balls both have color 1, so you can perform the operation to discard the second and fourth balls together.\nHence, you can perform a total of two operations.\n\nSample Input 2\n\n4 4 4 1\n\nSample Output 2\n\n1\n\nSample Input 3\n\n1 2 3 4\n\nSample Output 3\n\n0\r\n\nThere are cases where you cannot perform the operation even once.",
+        "model_cevabi": "def main():\n    A = list(map(int, input().split()))\n    count = {}\n    \n    for num in A:\n        if num not in count:\n            count[num] = 0\n        count[num] += 1\n    \n    max_count = max(count.values())\n    print(max_count)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 1,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc379_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "Takahashi has N teeth arranged in a single row from left to right. The current condition of his teeth is represented by a string S.\nIf the i-th character of S is O, it means that the i-th tooth from the left is healthy. If it is X, it means that the i-th tooth has a cavity. Healthy teeth do not have cavities.\nWhen he has K consecutive healthy teeth, he can eat one strawberry using those K teeth. After eating a strawberry, those K teeth develop cavities and become unhealthy.\nFind the maximum number of strawberries he can eat.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN K\nS\n\nOutput\n\nPrint the answer.\n\nConstraints\n\n\n- 1 \\leq K \\leq N \\leq 100\n- N and K are integers.\n- S is a string of length N consisting of O and X.\n\nSample Input 1\n\n7 3\nOOXOOOO\n\nSample Output 1\n\n1\n\nHe can eat one strawberry by using the three consecutive healthy teeth from the 4th to 6th tooth from the left. After this, he cannot eat any more strawberries. Besides, there is no way for him to eat more than one strawberry. Therefore, print 1.\n\nSample Input 2\n\n12 2\nOXXOOOXOOOOX\n\nSample Output 2\n\n3\n\nSample Input 3\n\n22 5\nXXOOOOOOOOXXOOOOOXXXXX\n\nSample Output 3\n\n2",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    n, k = map(int, data[0].split())\n    s = data[1]\n    \n    max_strawberries = 0\n    \n    # Check all possible starting positions\n    for start in range(n - k + 1):\n        healthy_count = 0\n        found = False\n        \n        # Count healthy teeth until we reach K or end\n        for i in range(start, start + k):\n            if s[i] == 'O':\n                healthy_count += 1\n                \n        # If we have at least K healthy teeth, check further\n        if healthy_count >= k:\n            found = True\n            \n            # Continue checking forward\n            for j in range(start + k, n):\n                if s[j] == 'O':\n                    healthy_count += 1\n                else:\n                    healthy_count = 0\n                    \n                if healthy_count >= k:\n                    found = True\n                    break\n                    \n            if found:\n                max_strawberries = max(max_strawberries, (k // 2) * (k + 1))\n                \n    print(max_strawberries)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 1,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc380_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "Iroha has a sequence of positive integers A = (A_1, A_2, \\dots, A_N) of length N (N \\ge 1).\r\nShe generated a string S using A as follows:\n\n- Start with S =  |.\n- For i = 1, 2, \\dots, N, perform the following operations in order:\n- Append A_i copies of - to the end of S.\n- Then, append one | to the end of S.\n\n\n\nGiven the generated string S, reconstruct the sequence A.\n\nInput\n\nThe input is given from Standard Input in the following format:\nS\n\nOutput\n\nPrint the answer in the following format, with elements separated by spaces in a single line:\nA_1 A_2 \\dots A_N\n\nConstraints\n\n\n- S is a string of length between 3 and 100, inclusive, generated by the method in the problem statement.\n- A is a sequence of positive integers of length at least 1.\n\nSample Input 1\n\n|---|-|----|-|-----|\n\nSample Output 1\n\n3 1 4 1 5\r\n\nS =  |---|-|----|-|-----| is generated by A = (3, 1, 4, 1, 5).\n\nSample Input 2\n\n|----------|\n\nSample Output 2\n\n10\n\nSample Input 3\n\n|-|-|-|------|\n\nSample Output 3\n\n1 1 1 6",
+        "model_cevabi": "def main():\n    s = input().strip()\n    \n    # Find all positions where we encounter '||' or '--'\n    positions = []\n    for i in range(len(s)):\n        if s[i:i+2] == '||' or s[i:i+2] == '--':\n            positions.append(i)\n    \n    # Calculate total number of '-' characters\n    total_minus = len(positions) * 2\n    \n    # Calculate number of terms in sequence\n    n_terms = total_minus // 2\n    \n    # Extract numbers from positions\n    numbers = []\n    start_pos = 0\n    for pos in positions:\n        num_length = pos - start_pos\n        numbers.append(int(s[start_pos:start_pos + num_length]))\n        start_pos = pos + 2  # Skip '|' character\n    \n    # Add last term which ends at the end of the string\n    numbers.append(int(s[start_pos:]))\n    \n    print(' '.join(map(str, numbers)))\n\nif __name__ == '__main__':\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 0
+        }
+    },
+    {
+        "soru_id": "abc381_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "The definition of an 11/22 string in this problem is the same as in Problems C and E.\n\nA string T is called an 11/22 string when it satisfies all of the following conditions:\n\n- |T| is odd. Here, |T| denotes the length of T.\n- The 1-st through (\\frac{|T|+1}{2} - 1)-th characters are all 1.\n- The (\\frac{|T|+1}{2})-th character is /.\n- The (\\frac{|T|+1}{2} + 1)-th through |T|-th characters are all 2.\n\nFor example, 11/22, 111/222, and / are 11/22 strings, but 1122, 1/22, 11/2222, 22/11, and //2/2/211 are not.\nGiven a string S of length N consisting of 1, 2, and /, determine whether S is an 11/22 string.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\r\nS\n\nOutput\n\nIf S is an 11/22 string, print Yes; otherwise, print No.\n\nConstraints\n\n\n- 1 \\leq N \\leq 100\n- S is a string of length N consisting of 1, 2, and /.\n\nSample Input 1\n\n5\r\n11/22\n\nSample Output 1\n\nYes\r\n\n11/22 satisfies the conditions for an 11/22 string in the problem statement.\n\nSample Input 2\n\n1\r\n/\n\nSample Output 2\n\nYes\r\n\n/ satisfies the conditions for an 11/22 string.\n\nSample Input 3\n\n4\r\n1/22\n\nSample Output 3\n\nNo\r\n\n1/22 does not satisfy the conditions for an 11/22 string.\n\nSample Input 4\n\n5\r\n22/11\n\nSample Output 4\n\nNo",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    n = int(data[0])\n    s = data[1].strip()\n    \n    if n % 2 == 0:\n        print(\"No\")\n        return\n        \n    first_half_length = (n + 1) // 2\n    second_half_length = n - first_half_length\n    \n    if s[:first_half_length] != '1' * first_half_length or \\\n       s[first_half_length] != '/' or \\\n       s[first_half_length + 1:second_half_length + 1] != '2' * second_half_length:\n        print(\"No\")\n    else:\n        print(\"Yes\")\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 4,
+            "gecilen": 2,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc381_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "A string T is called a 1122 string if and only if it satisfies all of the following three conditions:\n\n- \\lvert T \\rvert is even. Here, \\lvert T \\rvert denotes the length of T.\n- For each integer i satisfying 1\\leq i\\leq \\frac{|T|}{2}, the (2i-1)-th and 2i-th characters of T are equal.\n- Each character appears in T exactly zero or two times. That is, every character contained in T appears exactly twice in T.\n\nGiven a string S consisting of lowercase English letters, print Yes if S is a 1122 string, and No otherwise.\n\nInput\n\nThe input is given from Standard Input in the following format:\nS\n\nOutput\n\nIf S is a 1122 string, print Yes; otherwise, print No.\n\nConstraints\n\n\n- S is a string of length between 1 and 100, inclusive, consisting of lowercase English letters.\n\nSample Input 1\n\naabbcc\n\nSample Output 1\n\nYes\n\nS=aabbcc satisfies all the conditions for a 1122 string, so print Yes.\n\nSample Input 2\n\naab\n\nSample Output 2\n\nNo\n\nS=aab has an odd length and does not satisfy the first condition, so print No.\n\nSample Input 3\n\nzzzzzz\n\nSample Output 3\n\nNo\n\nS=zzzzzz contains six zs and does not satisfy the third condition, so print No.",
+        "model_cevabi": "def main():\n    s = input().strip()\n    \n    # Check if length is even\n    if len(s) % 2 != 0:\n        print(\"No\")\n        return\n    \n    half_length = len(s) // 2\n    \n    # Count frequency of each character\n    char_count = {}\n    for char in s:\n        char_count[char] = char_count.get(char, 0) + 1\n    \n    # Check if all characters appear exactly twice\n    for count in char_count.values():\n        if count != 2:\n            print(\"No\")\n            return\n    \n    # Check consecutive pairs\n    valid = True\n    for i in range(half_length):\n        if s[i] != s[i + half_length]:\n            valid = False\n            break\n    \n    print(\"Yes\" if valid else \"No\")\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 2,
+            "basarisiz": 1
+        }
+    },
+    {
+        "soru_id": "abc382_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are N boxes arranged in a row, and some of these boxes contain cookies.\nThe state of these boxes is represented by a string S of length N.\nSpecifically, the i-th box (1\\leq i \\leq N) from the left contains one cookie if the i-th character of S is @, and is empty if it is ..\nOver the next D days, Takahashi will choose and eat one cookie per day from among the cookies in these boxes.\nDetermine how many of the N boxes will be empty after D days have passed.\n(It can be proved that this value does not depend on which cookies Takahashi chooses each day.)\nIt is guaranteed that S contains at least D occurrences of @.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN D\nS\n\nOutput\n\nPrint the number of boxes that will be empty after D days have passed among the N boxes.\n\nConstraints\n\n\n- 1 \\leq D \\leq N \\leq 100\n- N and D are integers.\n- S is a string of length N consisting of @ and ..\n- S contains at least D occurrences of @.\n\nSample Input 1\n\n5 2\n.@@.@\n\nSample Output 1\n\n4\n\nFor example, Takahashi might act as follows:\n\n- Day 1: There are cookies in the 2nd, 3rd, and 5th boxes from the left. He chooses the cookie in the 2nd box to eat.\n- Day 2: There are cookies in the 3rd and 5th boxes. He chooses the cookie in the 5th box to eat.\n- After two days have passed, only the 3rd box from the left contains a cookie. Therefore, four out of the five boxes are empty.\n\nEven though Takahashi might choose differently on each day than in this example, there will still be four empty boxes after two days.\nTherefore, the answer is 4.\n\nSample Input 2\n\n3 3\n@@@\n\nSample Output 2\n\n3\n\nSample Input 3\n\n10 4\n@@@.@@.@@.\n\nSample Output 3\n\n7",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    n, d = map(int, data[0].split())\n    s = data[1]\n    \n    # Count initial number of empty boxes\n    count_empty = s.count('.')\n    \n    for _ in range(d):\n        # Find all positions with '@' and remove them\n        positions_with_at = [i for i, char in enumerate(s) if char == '@']\n        \n        # Remove all '@' characters\n        for pos in positions_with_at:\n            s = s[:pos] + s[pos+1:]\n            \n        # Count new empty boxes created\n        count_empty += len(positions_with_at)\n    \n    print(count_empty)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc382_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "This problem shares a similar setting with Problem A. The way Takahashi chooses cookies and what you are required to find are different from Problem A.\nThere are N boxes arranged in a row, and some of these boxes contain cookies.\nThe state of these boxes is represented by a string S of length N.\nSpecifically, the i-th box (1\\leq i \\leq N) from the left contains one cookie if the i-th character of S is @, and is empty if it is ..\nOver the next D days, Takahashi will choose and eat one cookie per day from among the cookies in these boxes. On each day, he chooses the cookie in the rightmost box that contains a cookie at that point.\nDetermine, for each of the N boxes, whether it will contain a cookie after D days have passed.\nIt is guaranteed that S contains at least D occurrences of @.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN D\nS\n\nOutput\n\nPrint a string of length N.\nThe i-th character (1 \\leq i \\leq N) of the string should be @ if the i-th box from the left contains a cookie after D days have passed, and . otherwise.\n\nConstraints\n\n\n- 1 \\leq D \\leq N \\leq 100\n- N and D are integers.\n- S is a string of length N consisting of @ and ..\n- S contains at least D occurrences of @.\n\nSample Input 1\n\n5 2\n.@@.@\n\nSample Output 1\n\n.@...\n\nTakahashi acts as follows:\n\n- Day 1: There are cookies in the 2nd, 3rd, and 5th boxes from the left. Among these, the rightmost is the 5th box. He eats the cookie in this box.\n- Day 2: There are cookies in the 2nd and 3rd boxes. Among these, the rightmost is the 3rd box. He eats the cookie in this box.\n- After two days have passed, only the 2nd box from the left contains a cookie.\n\nTherefore, the correct output is .@....\n\nSample Input 2\n\n3 3\n@@@\n\nSample Output 2\n\n...\n\nSample Input 3\n\n10 4\n@@@.@@.@@.\n\nSample Output 3\n\n@@@.......",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    n, d = map(int, data[0].split())\n    s = data[1]\n    \n    result = []\n    current_index = n - 1\n    \n    for _ in range(d):\n        if current_index >= 0 and s[current_index] == '@':\n            result.append('@')\n            current_index -= 1\n        else:\n            result.append('.')\n    \n    print(''.join(result[::-1]))\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc383_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There is one humidifier in the AtCoder company office. The current time is 0, and the humidifier has no water inside.\nYou will add water to this humidifier N times. The i-th addition of water (1 \\leq i \\leq N) takes place at time T_i, and you add V_i liters of water. It is guaranteed that T_i < T_{i+1} for all 1 \\leq i \\leq N-1.\nHowever, the humidifier has a leak, and as long as there is water inside, the amount of water decreases by 1 liter per unit time.\nFind the amount of water remaining in the humidifier immediately after you finish adding water at time T_N.\n\nInput\n\nThe input is given from Standard Input in the following format:\nN\r\nT_1 V_1\r\nT_2 V_2\r\n\\vdots\r\nT_N V_N\n\nOutput\n\nPrint the answer.\n\nConstraints\n\n\n- 1 \\leq N \\leq 100\n- 1 \\leq T_i \\leq 100 (1 \\leq i \\leq N)\n- 1 \\leq V_i \\leq 100 (1 \\leq i \\leq N)\n- T_i < T_{i+1} (1 \\leq i \\leq N-1)\n- All input values are integers.\n\nSample Input 1\n\n4\r\n1 3\r\n3 1\r\n4 4\r\n7 1\n\nSample Output 1\n\n3\r\n\nAt each point in time, water is added as follows:\n\n- Time 1: Before adding, the humidifier has 0 liters. After adding 3 liters, it has 3 liters.\n- Time 3: Before adding, it has 1 liter. After adding 1 liter, it has 2 liters total.\n- Time 4: Before adding, it has 1 liter. After adding 4 liters, it has 5 liters total.\n- Time 7: Before adding, it has 2 liters. After adding 1 liter, it has 3 liters total.\n\nAfter finishing the addition at time 7, the humidifier contains 3 liters. Thus, the answer is 3.\n\nSample Input 2\n\n3\r\n1 8\r\n10 11\r\n21 5\n\nSample Output 2\n\n5\n\nSample Input 3\n\n10\r\n2 1\r\n22 10\r\n26 17\r\n29 2\r\n45 20\r\n47 32\r\n72 12\r\n75 1\r\n81 31\r\n97 7\n\nSample Output 3\n\n57",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    \n    total_water = 0\n    current_time = 0\n    \n    index = 1\n    while index <= n:\n        T = int(data[index])\n        V = int(data[index + 1])\n        index += 2\n        \n        # Calculate water added during this interval\n        if T > current_time:\n            water_added = V\n            current_time = T\n        else:\n            water_added = V - (current_time - T)\n            current_time = T\n            \n        # Apply leak effect\n        if water_added > 0:\n            water_added -= (current_time - current_time % 1)  # Remove excess water due to leak\n            current_time = current_time % 1\n            \n        total_water += water_added\n        \n        # Check if we've reached the end\n        if index == n:\n            break\n            \n        # Move to next interval\n        T = int(data[index])\n        V = int(data[index + 1])\n        index += 2\n        \n        # If new interval starts before current time, skip\n        if T < current_time:\n            continue\n            \n        # Update current time\n        if T > current_time:\n            current_time = T\n        else:\n            current_time = T\n            \n    print(total_water)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc384_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "You are given a string S of length N consisting of lowercase English letters, along with lowercase English letters c_1 and c_2.\nFind the string obtained by replacing every character of S that is not c_1 with c_2.\n\nInput\n\nThe input is given in the following format from Standard Input:\nN c_1 c_2\nS\n\nOutput\n\nPrint the answer.\n\nConstraints\n\n\n- 1\\le N\\le 100\n- N is an integer.\n- c_1 and c_2 are lowercase English letters.\n- S is a string of length N consisting of lowercase English letters.\n\nSample Input 1\n\n3 b g\nabc\n\nSample Output 1\n\ngbg\n\nReplacing a and c (which are not b) with g in S= abc results in gbg, so print gbg.\n\nSample Input 2\n\n1 s h\ns\n\nSample Output 2\n\ns\n\nIt is possible that the resulting string after replacement is the same as the original string.\n\nSample Input 3\n\n7 d a\natcoder\n\nSample Output 3\n\naaaadaa\n\nSample Input 4\n\n10 b a\nacaabcabba\n\nSample Output 4\n\naaaabaabba",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    n = int(data[0])\n    c1 = data[1].strip()[0]\n    c2 = data[2].strip()[0]\n    s = data[3].strip()\n    \n    result = []\n    for char in s:\n        if char == c1:\n            result.append(c2)\n        else:\n            result.append(char)\n            \n    print(''.join(result))\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 4,
+            "gecilen": 0,
+            "basarisiz": 0
+        }
+    },
+    {
+        "soru_id": "abc385_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "You are given three integers A,B,C. Determine whether it is possible to divide these three integers into two or more groups so that these groups have equal sums.\n\nInput\n\nThe input is given from Standard Input in the following format:\nA B C\n\nOutput\n\nIf it is possible to divide A,B,C into two or more groups with equal sums, print Yes; otherwise, print No.\n\nConstraints\n\n\n- 1 \\leq A,B,C \\leq 1000\n- All input values are integers.\n\nSample Input 1\n\n3 8 5\n\nSample Output 1\n\nYes\r\n\nFor example, by dividing into two groups (3,5) and (8), each group can have the sum 8.\n\nSample Input 2\n\n2 2 2\n\nSample Output 2\n\nYes\r\n\nBy dividing into three groups (2),(2),(2), each group can have the sum 2.\n\nSample Input 3\n\n1 2 4\n\nSample Output 3\n\nNo\r\n\nNo matter how you divide them into two or more groups, it is not possible to make the sums equal.",
+        "model_cevabi": "def main():\n    A, B, C = map(int, input().split())\n    total = A + B + C\n    \n    if total % 3 != 0:\n        print(\"No\")\n        return\n        \n    target_sum = total // 3\n    \n    # Check all combinations of a, b, c where a <= b <= c\n    for a in range(0, min(A, target_sum) + 1):\n        for b in range(a, min(B, target_sum - a) + 1):\n            c = total - a - b\n            if c >= b and c <= B:\n                print(\"Yes\")\n                return\n                \n    print(\"No\")\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 1,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc385_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There is a grid with H rows and W columns. Let (i,j) denote the cell at the i-th row from the top and the j-th column from the left.\nIf S_{i,j} is #, the cell (i,j) is impassable; if it is ., the cell is passable and contains no house; if it is @, the cell is passable and contains a house.\nInitially, Santa Claus is in cell (X,Y). He will act according to the string T as follows.\n\n- Let |T| be the length of the string T. For i=1,2,\\ldots,|T|, he moves as follows.\n- Let (x,y) be the cell he is currently in.\n- If T_i is U and cell (x-1,y) is passable, move to cell (x-1,y).\n- If T_i is D and cell (x+1,y) is passable, move to cell (x+1,y).\n- If T_i is L and cell (x,y-1) is passable, move to cell (x,y-1).\n- If T_i is R and cell (x,y+1) is passable, move to cell (x,y+1).\n- Otherwise, stay in cell (x,y).\n\n\n\n\n\nFind the cell where he is after completing all actions, and the number of distinct houses that he passed through or arrived at during his actions. If the same house is passed multiple times, it is only counted once.\n\nInput\n\nThe Input is given from Standard Input in the following format:\nH W X Y\nS_{1,1}S_{1,2}\\ldots S_{1,W}\n\\dots\nS_{H,1}S_{H,2}\\ldots S_{H,W}\nT\n\nOutput\n\nLet (X,Y) be the cell where he is after completing all actions, and C be the number of distinct houses he passed through or arrived at during his actions. Print X,Y,C in this order separated by spaces.\n\nConstraints\n\n\n- 3 \\leq H,W \\leq 100\n- 1 \\leq X \\leq H\n- 1 \\leq Y \\leq W\n- All given numbers are integers.\n- Each S_{i,j} is one of #, ., @.\n- S_{i,1} and S_{i,W} are # for every 1 \\leq i \\leq H.\n- S_{1,j} and S_{H,j} are # for every 1 \\leq j \\leq W.\n- S_{X,Y}= .\n- T is a string of length at least 1 and at most 10^4, consisting of U, D, L, R.\n\nSample Input 1\n\n5 5 3 4\n#####\n#...#\n#.@.#\n#..@#\n#####\nLLLDRUU\n\nSample Output 1\n\n2 3 1\n\nSanta Claus behaves as follows:\n\n\n- T_1= L, so he moves from (3,4) to (3,3). A house is passed.\n- T_2= L, so he moves from (3,3) to (3,2).\n- T_3= L, but cell (3,1) is impassable, so he stays at (3,2).\n- T_4= D, so he moves from (3,2) to (4,2).\n- T_5= R, so he moves from (4,2) to (4,3).\n- T_6= U, so he moves from (4,3) to (3,3). A house is passed, but it has already been passed.\n- T_7= U, so he moves from (3,3) to (2,3).\n\nThe number of houses he passed or arrived during his actions is 1.\n\nSample Input 2\n\n6 13 4 6\n#############\n#@@@@@@@@@@@#\n#@@@@@@@@@@@#\n#@@@@.@@@@@@#\n#@@@@@@@@@@@#\n#############\nUURUURLRLUUDDURDURRR\n\nSample Output 2\n\n3 11 11\n\nSample Input 3\n\n12 35 7 10\n###################################\n#.................................#\n#..........@......................#\n#......@................@.........#\n#.............##............@.....#\n#...##........##....##............#\n#...##........##....##.......##...#\n#....##......##......##....##.....#\n#....##......##......##..##.......#\n#.....#######.........###.........#\n#.................................#\n###################################\nLRURRRUUDDULUDUUDLRLRDRRLULRRUDLDRU\n\nSample Output 3\n\n4 14 1",
+        "model_cevabi": "def main():\n    import sys\n    data = sys.stdin.read().splitlines()\n    \n    H, W, X, Y = map(int, data[0].split())\n    grid = []\n    houses = set()\n    \n    for i in range(1, 1 + H):\n        grid.append(data[i])\n        for j in range(1, 1 + W):\n            if grid[i-1][j-1] == '@':\n                houses.add((i, j))\n    \n    T = data[-1]\n    \n    x, y = X, Y\n    \n    visited = set()\n    visited.add((x, y))\n    \n    for char in T:\n        new_x, new_y = x, y\n        \n        if char == 'U' and x > 1 and grid[x-2][y-1] != '#':\n            new_x -= 1\n            \n        elif char == 'D' and x < H - 1 and grid[x][y-1] != '#':\n            new_x += 1\n            \n        elif char == 'L' and y > 1 and grid[x-1][y-2] != '#':\n            new_y -= 1\n            \n        elif char == 'R' and y < W - 1 and grid[x-1][y] != '#':\n            new_y += 1\n            \n        if (new_x, new_y) not in visited:\n            visited.add((new_x, new_y))\n            \n        x, y = new_x, new_y\n    \n    print(f\"{x} {y} {len(houses)}\")\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    },
+    {
+        "soru_id": "abc386_a",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There are four cards with integers A,B,C,D written on them.\nDetermine whether a Full House can be formed by adding one card.\nA set of five cards is called a Full House if and only if the following condition is satisfied:\n\n- For two distinct integers x and y, there are three cards with x written on them and two cards with y written on them.\n\nInput\n\nThe input is given from Standard Input in the following format:\nA B C D\n\nOutput\n\nIf adding one card can form a Full House, print Yes; otherwise, print No.\n\nConstraints\n\n\n- All input values are integers.\n- 1 \\le A,B,C,D \\le 13\n\nSample Input 1\n\n7 7 7 1\n\nSample Output 1\n\nYes\n\nAdding 1 to 7,7,7,1 forms a Full House.\n\nSample Input 2\n\n13 12 11 10\n\nSample Output 2\n\nNo\n\nAdding anything to 13,12,11,10 does not form a Full House.\n\nSample Input 3\n\n3 3 5 5\n\nSample Output 3\n\nYes\n\nAdding 3,3,5,5 to 3 forms a Full House.\nAlso, adding 5 forms a Full House.\n\nSample Input 4\n\n8 8 8 8\n\nSample Output 4\n\nNo\n\nAdding anything to 8,8,8,8 does not form a Full House.\nNote that five identical cards do not form a Full House.\n\nSample Input 5\n\n1 3 4 1\n\nSample Output 5\n\nNo",
+        "model_cevabi": "def main():\n    A, B, C, D = map(int, input().split())\n    \n    count_A = 0\n    count_B = 0\n    count_C = 0\n    count_D = 0\n    \n    if A == B:\n        count_B += 1\n    elif A == C:\n        count_C += 1\n    elif A == D:\n        count_D += 1\n        \n    if B == C:\n        count_C += 1\n    elif B == D:\n        count_D += 1\n        \n    if C == D:\n        count_D += 1\n        \n    if (count_A >= 2 and count_B >= 1) or \\\n       (count_A >= 1 and count_B >= 2):\n        print(\"Yes\")\n    else:\n        print(\"No\")\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 5,
+            "gecilen": 3,
+            "basarisiz": 2
+        }
+    },
+    {
+        "soru_id": "abc386_b",
+        "durum": "YANLIŞ_CEVAP",
+        "timeout_detay": 0,
+        "soru_metni": "There is a calculator with the buttons 00, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.\nWhen a string x is displayed on this calculator and you press a button b, the resulting displayed string becomes the string x with b appended to its end.\nInitially, the calculator displays the empty string (a string of length 0).\nFind the minimum number of button presses required to display the string S on this calculator.\n\nInput\n\nThe input is given from Standard Input in the following format:\nS\n\nOutput\n\nPrint the answer as an integer.\n\nConstraints\n\n\n- S is a string of length at least 1 and at most 1000, consisting of 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.\n- The first character of S is not 0.\n\nSample Input 1\n\n1000000007\n\nSample Output 1\n\n6\n\nTo display 1000000007, you can press the buttons 1, 00, 00, 00, 00, 7 in this order. The total number of button presses is 6, and this is the minimum possible.\n\nSample Input 2\n\n998244353\n\nSample Output 2\n\n9\n\nSample Input 3\n\n32000\n\nSample Output 3\n\n4",
+        "model_cevabi": "def main():\n    S = input().strip()\n    \n    # Count occurrences of each digit\n    count_0 = S.count('0')\n    count_1 = S.count('1')\n    count_2 = S.count('2')\n    count_3 = S.count('3')\n    count_4 = S.count('4')\n    count_5 = S.count('5')\n    count_6 = S.count('6')\n    count_7 = S.count('7')\n    count_8 = S.count('8')\n    count_9 = S.count('9')\n    \n    # Calculate minimum presses for each digit\n    presses_0 = min(count_0, count_1) + count_0\n    presses_1 = min(count_1, count_2) + count_1\n    presses_2 = min(count_2, count_3) + count_2\n    presses_3 = min(count_3, count_4) + count_3\n    presses_4 = min(count_4, count_5) + count_4\n    presses_5 = min(count_5, count_6) + count_5\n    presses_6 = min(count_6, count_7) + count_6\n    presses_7 = min(count_7, count_8) + count_7\n    presses_8 = min(count_8, count_9) + count_8\n    \n    # Find maximum presses among all digits\n    max_presses = max(presses_0, presses_1, presses_2, presses_3, presses_4, presses_5, presses_6, presses_7, presses_8)\n    \n    print(max_presses)\n\nif __name__ == \"__main__\":\n    main()",
+        "test_istatistikleri": {
+            "toplam": 3,
+            "gecilen": 0,
+            "basarisiz": 3
+        }
+    }
+]
