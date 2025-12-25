@@ -26,8 +26,9 @@ LoRA-CodeGen-Project/
 └── README.md                    # Project report and results
 ```
 # Benchmark Result(LiveCodeBench/AtCoder)
+
 | Model | Best Checkpoint | Pass@1 Score | Total Question (41) |
-| :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- 
 | **Deep_instruction** | **step-800** | **26.8%** | **11/41** |
 | **Diverse_instruction** | **step-600** | **36.6%** | **15/41** |
 
