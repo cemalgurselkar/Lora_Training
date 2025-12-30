@@ -26,6 +26,9 @@ LoRA-CodeGen-Project/
 └── README.md                    # Project report and results
 ```
 # Benchmark Result(LiveCodeBench/AtCoder)
+## Base Model (Qwen2.5-Coder-1.5B-Instructor)
+* **With DEEP Dataset: 11/41**
+* **With DIVERSE Dataset: 11/41**
 
 | Model | Best Checkpoint | Pass@1 Score | Total Question (41) |
 | :--- | :--- | :--- | :--- 
